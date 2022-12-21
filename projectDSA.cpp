@@ -160,6 +160,91 @@ class phonebook
         }
     }
 
+    void deleteByKey(string key)
+    {
+        list.erase(key);
+        return;
+    }
+
+    void del()
+    {
+        cout<<"*************Enter the number corresponding to your choice*************"<<endl<<endl;
+        cout<<"1: Delete by name."<<endl;
+        cout<<"2: Delete by email."<<endl;
+        cout<<"3: Delete by number(s)."<<endl;
+        cout<<endl;
+
+        int x;
+        cin>>x;
+        cin.ignore();
+        switch(x)
+        {
+            case(1):
+            {
+                cout<<"Enter the name: \n";
+                string n;
+                getline(cin,n);
+                if(list.find(n)==list.end())
+                {
+                    cout<<"Contact does not exist!"<<endl;
+                    break;
+                }
+                deleteByKey(n);
+                break;
+            }
+
+            case(2):
+            {
+                cout<<"Enter the email: \n";
+                string n;
+                getline(cin,n);
+                string key="";
+                for(auto it=list.begin();it!=list.end();it++)
+                {
+                    if(it->second->email==n)
+                    {
+                        key = it->first;
+                        break;
+                    }
+                }
+                if(key=="") 
+                {
+                    cout<<"Contact does not exist!"<<endl;
+                    break;
+                }
+                deleteByKey(key);
+                break;
+            }
+
+            case(3):
+            {
+                cout<<"Enter the number: \n";
+                long long int num;
+                cin>>num;
+                string key="";
+                for(auto it=list.begin();it!=list.end();it++)
+                {
+                    for(auto i=0;i<it->second->numbers.size();it++)
+                    {
+                        if(it->second->numbers[i]==num)
+                        {
+                            key = it->first;
+                            break;
+                        }
+                    }
+                }
+                if(key=="") 
+                {
+                    cout<<"Contact does not exist!"<<endl;
+                    break;
+                }
+                deleteByKey(key);
+                break;
+
+            }
+        }
+    }
+
     void update(string originalName)
     {
         cout<<"*************Enter the number corresponding to your choice*************"<<endl<<endl;
@@ -241,12 +326,14 @@ int main()
             contacts.search();
             break;
         }
+
         case(2):
         {
             cout<<endl<<"Contacts: "<<endl<<endl;
             contacts.displayAll();
             break;
         }
+
         case(3):
         {
             cout<<endl<<"Enter the name: "<<endl;
@@ -264,6 +351,13 @@ int main()
             cout<<"Contact sucessfully added!"<<endl;
             break;
         }
+
+        case(4):
+        {
+            contacts.del();
+            break;
+        }
+
         case(5):
         {
             cout<<endl<<"Enter the name: \n";
@@ -273,9 +367,27 @@ int main()
             cout<<"Contact sucessfully updated!"<<endl;
             break;
         }
+
+        case(6):
+        {
+            break;
+        }
+
+        case(7):
+        {
+            break;
+        }
+
+        case(8):
+        {
+            break;
+        }
     }
+
     cout<<endl<<"Do you want to continue? [y/n] "<<endl;
     cin>>c;
+
     }
+
     return 0;
     }
