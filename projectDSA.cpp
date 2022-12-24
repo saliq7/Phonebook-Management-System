@@ -15,11 +15,28 @@ class node
     }
 };
 
+//implementing the logNode
+class logNode
+{
+    public:
+    string name;
+    long long int number;
+    string td;
+
+    logNode(string name,long long int number,string td)
+    {
+        this->name= name;
+        this->number=number;
+        this->td=td;
+    }
+};
+
 //implementing the phonebook
 class phonebook
 {
     public:
     map<string,node*> list;
+    vector<logNode*> callLog;
 
     //constructor
     phonebook()
@@ -102,7 +119,7 @@ class phonebook
                 if(list.find(n)==list.end())
                 {
                     cout<<"Contact does not exist!"<<endl;
-                    break;
+                    return;
                 }
                 displayByKey(n);
                 break;
@@ -125,7 +142,7 @@ class phonebook
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
-                    break;
+                    return;
                 }
                 displayByKey(key);
                 break;
@@ -151,7 +168,7 @@ class phonebook
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
-                    break;
+                    return;
                 }
                 displayByKey(key);
                 break;
@@ -187,7 +204,7 @@ class phonebook
                 if(list.find(n)==list.end())
                 {
                     cout<<"Contact does not exist!"<<endl;
-                    break;
+                    return;
                 }
                 deleteByKey(n);
                 break;
@@ -210,7 +227,7 @@ class phonebook
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
-                    break;
+                    return;
                 }
                 deleteByKey(key);
                 break;
@@ -236,7 +253,7 @@ class phonebook
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
-                    break;
+                    return;
                 }
                 deleteByKey(key);
                 break;
@@ -296,6 +313,137 @@ class phonebook
         }
     }
 
+    void callByKey(string key)
+    {
+        time_t my_time = time(NULL);
+        string x=ctime(&my_time);
+        logNode * n= new logNode(key,list[key]->numbers[0],x);
+        callLog.push_back(n);
+        return;
+    }
+
+    void callRandom(long long int num)
+    {   
+        time_t my_time = time(NULL);
+        string x=ctime(&my_time);
+        logNode * n= new logNode("Unknown",num,x);
+        callLog.push_back(n);
+        return;
+    }
+
+    void call()
+    {
+        cout<<"*************Enter the number corresponding to your choice*************"<<endl<<endl;
+        cout<<"1: Call by name."<<endl;
+        cout<<"2: Call by email."<<endl;
+        cout<<"3: Call by number(s)."<<endl;
+        cout<<"4: Call random number."<<endl;
+        cout<<endl;
+
+        int x;
+        cin>>x;
+        cin.ignore();
+        switch(x)
+        {
+            case(1):
+            {
+                cout<<"Enter the name: \n";
+                string n;
+                getline(cin,n);
+                if(list.find(n)==list.end())
+                {
+                    cout<<"Contact does not exist!"<<endl;
+                    return;
+                }
+                callByKey(n);
+                break;
+            }
+
+            case(2):
+            {
+                cout<<"Enter the email: \n";
+                string n;
+                getline(cin,n);
+                string key="";
+                for(auto it=list.begin();it!=list.end();it++)
+                {
+                    if(it->second->email==n)
+                    {
+                        key = it->first;
+                        break;
+                    }
+                }
+                if(key=="") 
+                {
+                    cout<<"Contact does not exist!"<<endl;
+                    return;
+                }
+                callByKey(key);
+                break;
+            }
+
+            case(3):
+            {
+                cout<<"Enter the number: \n";
+                long long int num;
+                cin>>num;
+                string key="";
+                for(auto it=list.begin();it!=list.end();it++)
+                {
+                    for(auto i=0;i<it->second->numbers.size();it++)
+                    {
+                        if(it->second->numbers[i]==num)
+                        {
+                            key = it->first;
+                            break;
+                        }
+                    }
+                }
+                if(key=="") 
+                {
+                    cout<<"Contact does not exist!"<<endl;
+                    return;
+                }
+                callByKey(key);
+                break;
+
+            }
+
+            case(4):
+            {
+                cout<<"Enter the number: \n";
+                long long int num;
+                cin>>num;
+                callRandom(num);
+                break;
+            }
+        }
+    }
+
+    void displayCallLog()
+    {
+        int size=callLog.size();
+        if(size==0){
+            cout<<"No recent calls!"<<endl;
+            return;
+        }
+        cout<<"Recents: \n\n";
+        for(int i=size-1;i>=0;i--)
+        {
+            cout<<size-i<<": "<<callLog[i]->name<<endl;
+            cout<<"Number: "<<callLog[i]->number<<endl;
+            cout<<"Time and Date: "<<callLog[i]->td<<endl;
+        }
+        return;
+    }
+
+    void clearLog()
+    {
+        callLog.clear();
+        cout<<"Log Cleared Sucessfully!"<<endl;
+        return;
+    }
+
 };
 
 
@@ -312,9 +460,10 @@ int main()
     cout<<"3: Add a new Contact."<<endl;
     cout<<"4: Delete a Contact."<<endl;
     cout<<"5: Update a Contact."<<endl;
-    cout<<"6: Display Call log."<<endl;
-    cout<<"7: Make a call."<<endl;
-    cout<<"8: Display list of favourites."<<endl<<endl;
+    cout<<"6: Make a call."<<endl;
+    cout<<"7: Display Call log."<<endl;
+    cout<<"8: Clear Call Log."<<endl;
+    cout<<"9: Display list of favourites."<<endl<<endl;
     
     int n;
     cin>>n;
@@ -370,23 +519,32 @@ int main()
 
         case(6):
         {
+            contacts.call();
+            cout<<"Call made sucessfully!";
             break;
         }
 
         case(7):
         {
+            contacts.displayCallLog();
             break;
         }
 
         case(8):
         {
+            contacts.clearLog();
+            break;
+        }
+
+        case(9):
+        {
+            
             break;
         }
     }
 
     cout<<endl<<"Do you want to continue? [y/n] "<<endl;
     cin>>c;
-
     }
 
     return 0;
