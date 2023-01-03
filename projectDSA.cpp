@@ -1,3 +1,5 @@
+//START
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -98,6 +100,37 @@ class phonebook
         return;
     }
 
+    string getKeyByEmail(string email)
+    {
+        string key="";
+        for(auto it=list.begin();it!=list.end();it++)
+            {
+                if(it->second->email==email)
+                {
+                    key = it->first;
+                    break;
+                }
+            }
+        return key;
+    }
+
+    string getKeyByNumber(long long int number)
+    {
+        string key="";
+         for(auto it=list.begin();it!=list.end();it++)
+            {
+                for(auto i=0;i<it->second->numbers.size();it++)
+                {
+                    if(it->second->numbers[i]==number)
+                    {
+                        key = it->first;
+                        break;
+                    }
+                }
+            }
+            return key;
+    }
+
     void search()
     {
         cout<<"*************Enter the number corresponding to your choice*************"<<endl<<endl;
@@ -130,15 +163,7 @@ class phonebook
                 cout<<"Enter the email: \n";
                 string n;
                 getline(cin,n);
-                string key="";
-                for(auto it=list.begin();it!=list.end();it++)
-                {
-                    if(it->second->email==n)
-                    {
-                        key = it->first;
-                        break;
-                    }
-                }
+                string key=getKeyByEmail(n);
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
@@ -153,18 +178,7 @@ class phonebook
                 cout<<"Enter the number: \n";
                 long long int num;
                 cin>>num;
-                string key="";
-                for(auto it=list.begin();it!=list.end();it++)
-                {
-                    for(auto i=0;i<it->second->numbers.size();it++)
-                    {
-                        if(it->second->numbers[i]==num)
-                        {
-                            key = it->first;
-                            break;
-                        }
-                    }
-                }
+                string key=getKeyByNumber(num);
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
@@ -172,7 +186,6 @@ class phonebook
                 }
                 displayByKey(key);
                 break;
-
             }
         }
     }
@@ -215,15 +228,7 @@ class phonebook
                 cout<<"Enter the email: \n";
                 string n;
                 getline(cin,n);
-                string key="";
-                for(auto it=list.begin();it!=list.end();it++)
-                {
-                    if(it->second->email==n)
-                    {
-                        key = it->first;
-                        break;
-                    }
-                }
+                string key=getKeyByEmail(n);
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
@@ -238,18 +243,7 @@ class phonebook
                 cout<<"Enter the number: \n";
                 long long int num;
                 cin>>num;
-                string key="";
-                for(auto it=list.begin();it!=list.end();it++)
-                {
-                    for(auto i=0;i<it->second->numbers.size();it++)
-                    {
-                        if(it->second->numbers[i]==num)
-                        {
-                            key = it->first;
-                            break;
-                        }
-                    }
-                }
+                string key=getKeyByNumber(num);
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
@@ -364,15 +358,7 @@ class phonebook
                 cout<<"Enter the email: \n";
                 string n;
                 getline(cin,n);
-                string key="";
-                for(auto it=list.begin();it!=list.end();it++)
-                {
-                    if(it->second->email==n)
-                    {
-                        key = it->first;
-                        break;
-                    }
-                }
+                string key=getKeyByEmail(n);
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
@@ -387,18 +373,7 @@ class phonebook
                 cout<<"Enter the number: \n";
                 long long int num;
                 cin>>num;
-                string key="";
-                for(auto it=list.begin();it!=list.end();it++)
-                {
-                    for(auto i=0;i<it->second->numbers.size();it++)
-                    {
-                        if(it->second->numbers[i]==num)
-                        {
-                            key = it->first;
-                            break;
-                        }
-                    }
-                }
+                string key=getKeyByNumber(num);
                 if(key=="") 
                 {
                     cout<<"Contact does not exist!"<<endl;
@@ -462,8 +437,7 @@ int main()
     cout<<"5: Update a Contact."<<endl;
     cout<<"6: Make a call."<<endl;
     cout<<"7: Display Call log."<<endl;
-    cout<<"8: Clear Call Log."<<endl;
-    cout<<"9: Display list of favourites."<<endl<<endl;
+    cout<<"8: Clear Call Log."<<endl<<endl;
     
     int n;
     cin>>n;
@@ -535,17 +509,13 @@ int main()
             contacts.clearLog();
             break;
         }
-
-        case(9):
-        {
-            
-            break;
-        }
     }
 
     cout<<endl<<"Do you want to continue? [y/n] "<<endl;
     cin>>c;
     }
-
     return 0;
     }
+
+
+//END
