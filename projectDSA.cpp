@@ -2,7 +2,6 @@
 
 #include<bits/stdc++.h>
 using namespace std;
-
 //implementing a node class
 class node
 {
@@ -447,6 +446,7 @@ int main()
         case(1):
         {
             contacts.search();
+            cout<<"Search sucessfull!"<<endl;
             break;
         }
 
@@ -454,6 +454,7 @@ int main()
         {
             cout<<endl<<"Contacts: "<<endl<<endl;
             contacts.displayAll();
+            cout<<endl;
             break;
         }
 
@@ -478,6 +479,7 @@ int main()
         case(4):
         {
             contacts.del();
+            cout<<"Contact deleted sucessfully!"<<endl;
             break;
         }
 
@@ -494,19 +496,21 @@ int main()
         case(6):
         {
             contacts.call();
-            cout<<"Call made sucessfully!";
+            cout<<"Call made sucessfully!"<<endl;
             break;
         }
 
         case(7):
         {
             contacts.displayCallLog();
+            cout<<endl;
             break;
         }
 
         case(8):
         {
             contacts.clearLog();
+            cout<<"Call Log cleared!"<<endl;
             break;
         }
     }
@@ -516,6 +520,4 @@ int main()
     }
     return 0;
     }
-
-
 //END
